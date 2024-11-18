@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.madang.manager.customer.CustomerMapper">
+    <insert id="insCust">
+        insert into customer
+        set name = #{name}
+        , address = #{address}
+        , phone = #{phone}
+    </insert>
+    <select id="selCust">
+        select custid AS custId, name, address, phone
+        from customer
+        <choose>
+            <when test="searchType != null and searchType != '' and
+                  searchText != null and searchText != '' ">
+                where ${searchType} like '%${searchText}%'
+                order by ${searchType}
+            </when>
+            <otherwise>
+                order by custid
+            </otherwise>
+        </choose>
+        limit #{custStartIdx}, #{custSize}
+    </select>
+    <update id="updCust">
+        update customer
+        <set>
+            <if test="name != null and name != '' ">
+                name = #{name}
+            </if>
+            <if test="address != null and address != '' ">
+                , address = #{address}
+            </if>
+            <if test="phone != null and phone != '' ">
+                , phone = #{phone}
+            </if>
+        </set>
+        where custid = #{custId}
+    </update>
+    <delete id="delCust">
+        delete from customer
+        where custid = #{custId}
+    </delete>
+</mapper>

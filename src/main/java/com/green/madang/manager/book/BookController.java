@@ -6,11 +6,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("manager/book")
@@ -21,6 +22,10 @@ public class BookController {
     @PostMapping
     @Operation(summary = "도서 입고", description = "도서 입고 처리 API")
     public MyResponse<Integer> postBook(@RequestBody BookPostReq i){
+        log.info("info {}", i);
+        log.warn("warn");
+        log.error("error");
+
         int result = service.postBook(i);
         MyResponse<Integer> response = new MyResponse<>("책 등록 완료", result);
         return response;
