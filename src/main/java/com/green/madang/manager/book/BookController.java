@@ -4,7 +4,6 @@ import com.green.madang.common.model.MyResponse;
 import com.green.madang.manager.book.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
@@ -27,8 +26,7 @@ public class BookController {
         log.error("error");
 
         int result = service.postBook(i);
-        MyResponse<Integer> response = new MyResponse<>("책 등록 완료", result);
-        return response;
+        return new MyResponse<>("책 등록 완료", result);
     }
 
     @GetMapping
@@ -42,8 +40,7 @@ public class BookController {
     @Operation(summary = "도서 수정", description = "도서 수정 API")
     public MyResponse<Integer> updateBook(@RequestBody BookUpdateReq u){
         int result = service.putBook(u);
-        MyResponse<Integer> response = new MyResponse<>("책 수정 완료", result);
-        return response;
+        return new MyResponse<>("책 수정 완료", result);
     }
 
     @DeleteMapping
