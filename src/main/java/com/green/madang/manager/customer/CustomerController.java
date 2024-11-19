@@ -29,6 +29,7 @@ public class CustomerController {
     @GetMapping
     @Operation(summary = "고객 검색", description = "고객 검색 API")
     public MyResponse<List<CustomerGetRes>> getCustList(@ParameterObject CustomerGetReq s){
+        log.info("get-req: {}", s);
         List<CustomerGetRes> list = service.getCust(s);
         return new MyResponse<>(s.getCustPage() + "검색 완료", list);
     }
@@ -39,7 +40,7 @@ public class CustomerController {
     public MyResponse<List<CustomerGetRes>> getCustList(@RequestParam int page, @RequestParam int size,
                                                         @RequestParam(name = "search_type", required = false) String searchType
                                                         , @RequestParam(name = "search_text", required = false) String searchText){
-        CustomerGetReq p = new CustomerGetReq();
+        CustomerGetReq p = new CustomerGetReq(page, size, searchType, searchText);
         p.setCustPage(page);
         p.setCustSize(size);
         p.setSearchType(searchType);
